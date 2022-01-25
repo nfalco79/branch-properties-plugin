@@ -1,0 +1,30 @@
+<!--
+ - Copyright (c) 2018, Falco Nikolas
+ -
+ - Licensed under the Apache License, Version 2.0 (the
+ - "License"); you may not use this file except in compliance
+ - with the License.  You may obtain a copy of the License at
+ -
+ -   http://www.apache.org/licenses/LICENSE-2.0
+ -
+ - Unless required by applicable law or agreed to in writing,
+ - software distributed under the License is distributed on an
+ - "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ - KIND, either express or implied.  See the License for the
+ - specific language governing permissions and limitations
+ - under the License.
+ -->
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+    <f:entry title="${%Action Label}" field="actionLabel">
+        <f:textbox default="${%Create Branch}"/>
+    </f:entry>
+
+    <f:entry title="${%Branch Name}" field="branchName">
+        <f:textbox />
+    </f:entry>
+
+    <f:entry title="${%Build parameters}">
+        <f:repeatableHeteroProperty hasHeader="true" field="parameterDefinitions" deleteCaption="${%Delete parameter}" addCaption="${%Add parameter}"/>
+    </f:entry>
+</j:jelly>

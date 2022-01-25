@@ -1,0 +1,67 @@
+<!--
+ - Copyright (c) 2018, Falco Nikolas
+ -
+ - Licensed under the Apache License, Version 2.0 (the
+ - "License"); you may not use this file except in compliance
+ - with the License.  You may obtain a copy of the License at
+ -
+ -   http://www.apache.org/licenses/LICENSE-2.0
+ -
+ - Unless required by applicable law or agreed to in writing,
+ - software distributed under the License is distributed on an
+ - "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ - KIND, either express or implied.  See the License for the
+ - specific language governing permissions and limitations
+ - under the License.
+ -->
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <l:layout norefresh="true">
+        <!-- enabling the side panel of the current project, sidepanel.jelly of the project could not be found
+        <st:include it="${it.project}" page="sidepanel.jelly" />
+         -->
+        <l:main-panel>
+            <table width="100%">
+                <tr>
+                    <td>
+                        <j:choose>
+                            <j:when test="${it.parameterDefinitions == null || it.parameterDefinitions.isEmpty()}">
+                                Please configure your specific release parameters in the project config page.
+                            </j:when>
+                            <j:otherwise>
+                                <f:form method="post" action="submit" name="parameter-action-form">
+                                    <f:section title="${%Define parameters}">
+                                        <j:forEach var="parameterDefinition" items="${it.parameterDefinitions}">
+                                            <st:include it="${parameterDefinition}" page="${parameterDefinition.descriptor.valuePage}" />
+                                        </j:forEach>
+                                    </f:section>
+                                    <f:submit value="${%Schedule Parametric Build}" />
+                                </f:form>
+                            </j:otherwise>
+                        </j:choose>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <f:section title="${%Previous parametric build}">
+                        </f:section>
+                    </td>
+                    <j:forEach var="b" items="${it.getPreviousParametricBuilds()}">
+                        <tr>
+                            <j:set var="recentParameters" value="${it.getParametersForBuild(b)}" />
+                            <j:if test="${!recentParameters.isEmpty()}">
+                                <td id="build_${b.number}">
+                                    <l:pane title="#${b.number} - ${it.getBadgeTipOfBuild(b)} - ${%Parameters}" width="3">
+                                        <j:forEach var="parameterValue" items="${recentParameters}">
+                                            <st:include it="${parameterValue}" page="value.jelly" />
+                                        </j:forEach>
+                                    </l:pane>
+                                </td>
+                            </j:if>
+                        </tr>
+                    </j:forEach>
+                </tr>
+            </table>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
