@@ -7,7 +7,7 @@
     </parent>
 
     <groupId>com.github.nfalco79</groupId>
-    <artifactId>branch-properties-plugin</artifactId>
+    <artifactId>branch-properties</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <name>Define branch properties for MultiBranch Pipeline Jobs</name>
