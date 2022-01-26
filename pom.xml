@@ -8,7 +8,7 @@
 
     <groupId>com.github.nfalco79</groupId>
     <artifactId>branch-properties</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <name>Define branch properties for MultiBranch Pipeline Jobs</name>
     <description>Allow to define new parameters as environment variables not defined in the Jenkinsfile.</description>
@@ -36,7 +36,7 @@
         <url>https://github.com/nfalco79/branch-properties-plugin</url>
         <connection>scm:git:git@github.com:nfalco79/branch-properties-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:nfalco79/branch-properties-plugin.git</developerConnection>
-      <tag>branch-properties-1.0.1</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
