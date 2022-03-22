@@ -18,14 +18,13 @@ package com.github.nfalco79.jenkins.plugins.parametricrun;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.export.Exported;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import hudson.DescriptorExtensionList;
 import hudson.Extension;
 import hudson.Util;
@@ -47,7 +46,7 @@ public class ParameterBranchProperty extends BranchProperty {
     private List<ParameterDefinition> parameterDefinitions;
 
     @DataBoundConstructor
-    public ParameterBranchProperty(@Nonnull String actionLabel, //
+    public ParameterBranchProperty(@NonNull String actionLabel, //
                                    boolean useBadge, //
                                    @Nullable String badgeTemplate) {
         this.actionLabel = actionLabel;

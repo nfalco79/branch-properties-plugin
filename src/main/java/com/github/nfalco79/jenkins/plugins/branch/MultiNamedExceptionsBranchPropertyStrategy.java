@@ -21,14 +21,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import edu.umd.cs.findbugs.annotations.CheckForNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.Util;
 import hudson.model.AbstractDescribableImpl;
@@ -47,13 +46,13 @@ public class MultiNamedExceptionsBranchPropertyStrategy extends BranchPropertySt
     /**
      * The properties that all non-exception {@link SCMHead}s will get.
      */
-    @Nonnull
+    @NonNull
     private final List<BranchProperty> defaultProperties;
 
     /**
      * The configured exceptions.
      */
-    @Nonnull
+    @NonNull
     private final List<Named> namedExceptions;
 
     /**
@@ -76,7 +75,7 @@ public class MultiNamedExceptionsBranchPropertyStrategy extends BranchPropertySt
      *
      * @return the default properties.
      */
-    @Nonnull
+    @NonNull
     @SuppressWarnings("unused")// by stapler
     public List<BranchProperty> getDefaultProperties() {
         return defaultProperties;
@@ -87,7 +86,7 @@ public class MultiNamedExceptionsBranchPropertyStrategy extends BranchPropertySt
      *
      * @return the named exceptions to the defaults.
      */
-    @Nonnull
+    @NonNull
     @SuppressWarnings("unused")// by stapler
     public List<Named> getNamedExceptions() {
         return namedExceptions;
@@ -96,7 +95,7 @@ public class MultiNamedExceptionsBranchPropertyStrategy extends BranchPropertySt
     /**
      * {@inheritDoc}
      */
-    @Nonnull
+    @NonNull
     @Override
     public List<BranchProperty> getPropertiesFor(SCMHead head) {
         List<BranchProperty> properties = new ArrayList<>();
@@ -136,13 +135,13 @@ public class MultiNamedExceptionsBranchPropertyStrategy extends BranchPropertySt
         /**
          * The properties that all {@link SCMHead}s will get.
          */
-        @Nonnull
+        @NonNull
         private final List<BranchProperty> props;
 
         /**
          * The name to match
          */
-        @Nonnull
+        @NonNull
         private final String name;
 
         /**
@@ -163,7 +162,7 @@ public class MultiNamedExceptionsBranchPropertyStrategy extends BranchPropertySt
          *
          * @return the exception properties.
          */
-        @Nonnull
+        @NonNull
         public List<BranchProperty> getProps() {
             return props;
         }
@@ -173,7 +172,7 @@ public class MultiNamedExceptionsBranchPropertyStrategy extends BranchPropertySt
          *
          * @return the name(s) to match.
          */
-        @Nonnull
+        @NonNull
         public String getName() {
             return name;
         }
@@ -184,7 +183,7 @@ public class MultiNamedExceptionsBranchPropertyStrategy extends BranchPropertySt
          * @param head the head.
          * @return {@code true} if the head is a match.
          */
-        public boolean isMatch(@Nonnull SCMHead head) {
+        public boolean isMatch(@NonNull SCMHead head) {
             return isMatch(head.getName(), this.name);
         }
 

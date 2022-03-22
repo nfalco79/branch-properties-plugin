@@ -15,11 +15,10 @@
  */
 package com.github.nfalco79.jenkins.plugins.parametricrun.branch;
 
-import javax.annotation.Nonnull;
-
-import com.github.nfalco79.jenkins.plugins.parametricrun.ParameterActionPermissionHelper;
 import com.github.nfalco79.jenkins.plugins.parametricrun.Messages;
+import com.github.nfalco79.jenkins.plugins.parametricrun.ParameterActionPermissionHelper;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.init.InitMilestone;
 import hudson.init.Initializer;
@@ -35,11 +34,11 @@ public final class NewBranchPermissionHelper {
      */
     public static final Permission BRANCH_PERMISSION = new Permission(ParameterActionPermissionHelper.PERMISSIONS, "NewBranch", Messages._ParameterBuildPermissionHelper_description(), Jenkins.ADMINISTER, PermissionScope.ITEM);
 
-    public static boolean hasReleasePermission(@Nonnull Job<?, ?> job) {
+    public static boolean hasReleasePermission(@NonNull Job<?, ?> job) {
         return job.hasPermission(BRANCH_PERMISSION);
     }
 
-    public static void checkReleasePermission(@Nonnull Job<?, ?> job) {
+    public static void checkReleasePermission(@NonNull Job<?, ?> job) {
         job.checkPermission(BRANCH_PERMISSION);
     }
 

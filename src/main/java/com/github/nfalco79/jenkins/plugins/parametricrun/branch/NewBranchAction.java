@@ -19,10 +19,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import com.github.nfalco79.jenkins.plugins.parametricrun.ParameterAction;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Util;
 import hudson.model.Action;
 import hudson.model.Job;
@@ -42,9 +41,9 @@ public class NewBranchAction extends ParameterAction {
     private final String branchName;
 
     public NewBranchAction(Job<?, ?> job, //
-                           @Nonnull String actionLabel, //
+                           @NonNull String actionLabel, //
                            List<ParameterDefinition> parameterDefinitions,
-                           @Nonnull String branchName) {
+                           @NonNull String branchName) {
         super(job, actionLabel, null, parameterDefinitions);
         this.branchName = branchName;
     }

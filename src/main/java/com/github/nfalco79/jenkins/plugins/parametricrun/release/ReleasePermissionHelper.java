@@ -15,10 +15,9 @@
  */
 package com.github.nfalco79.jenkins.plugins.parametricrun.release;
 
-import javax.annotation.Nonnull;
-
 import com.github.nfalco79.jenkins.plugins.parametricrun.ParameterActionPermissionHelper;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.init.InitMilestone;
 import hudson.init.Initializer;
@@ -34,11 +33,11 @@ public final class ReleasePermissionHelper {
      */
     public static final Permission RELEASE_PERMISSION = new Permission(ParameterActionPermissionHelper.PERMISSIONS, "Release", Messages._ReleasePermissionHelper_description(), Jenkins.ADMINISTER, PermissionScope.ITEM);
 
-    public static boolean hasReleasePermission(@Nonnull Job<?, ?> job) {
+    public static boolean hasReleasePermission(@NonNull Job<?, ?> job) {
         return job.hasPermission(RELEASE_PERMISSION);
     }
 
-    public static void checkReleasePermission(@Nonnull Job<?, ?> job) {
+    public static void checkReleasePermission(@NonNull Job<?, ?> job) {
         job.checkPermission(RELEASE_PERMISSION);
     }
 

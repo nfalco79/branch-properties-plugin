@@ -15,8 +15,7 @@
  */
 package com.github.nfalco79.jenkins.plugins.parametricrun;
 
-import javax.annotation.Nonnull;
-
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.init.InitMilestone;
 import hudson.init.Initializer;
 import hudson.model.Job;
@@ -33,11 +32,11 @@ public final class ParameterActionPermissionHelper {
     public static final PermissionGroup PERMISSIONS = new PermissionGroup(ParameterAction.class, Messages._Permissions_title());
     public static final Permission PARAMETER_ACTION_PERMISSION = new Permission(PERMISSIONS, "ParametricRun", Messages._ParameterBuildPermissionHelper_description(), Jenkins.ADMINISTER, PermissionScope.ITEM);
 
-    public static boolean hasParametricRunPermission(@Nonnull Job<?, ?> job) {
+    public static boolean hasParametricRunPermission(@NonNull Job<?, ?> job) {
         return job.hasPermission(PARAMETER_ACTION_PERMISSION);
     }
 
-    public static void checkParametricRunPermission(@Nonnull Job<?, ?> job) {
+    public static void checkParametricRunPermission(@NonNull Job<?, ?> job) {
         job.checkPermission(PARAMETER_ACTION_PERMISSION);
     }
 

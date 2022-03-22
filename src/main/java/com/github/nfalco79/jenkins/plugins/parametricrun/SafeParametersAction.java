@@ -21,11 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.model.EnvironmentContributor;
@@ -43,7 +42,7 @@ import hudson.model.TaskListener;
 @Restricted(NoExternalUse.class)
 public class SafeParametersAction extends ParametersAction {
 
-    @Nonnull
+    @NonNull
     private final List<ParameterValue> parameters;
 
     /**
@@ -53,7 +52,7 @@ public class SafeParametersAction extends ParametersAction {
      * @param parameters Parameters to be passed. All of them will be considered
      *        as safe
      */
-    public SafeParametersAction(@Nonnull List<ParameterValue> parameters) {
+    public SafeParametersAction(@NonNull List<ParameterValue> parameters) {
         this.parameters = parameters;
     }
 
@@ -91,23 +90,23 @@ public class SafeParametersAction extends ParametersAction {
     public static final class SafeParametersActionEnvironmentContributor extends EnvironmentContributor {
 
         @Override
-        public void buildEnvironmentFor(@SuppressWarnings("rawtypes") @Nonnull Job job,
-                                        @Nonnull EnvVars envs,
-                                        @Nonnull TaskListener listener) throws IOException, InterruptedException {
+        public void buildEnvironmentFor(@SuppressWarnings("rawtypes") @NonNull Job job,
+                                        @NonNull EnvVars envs,
+                                        @NonNull TaskListener listener) throws IOException, InterruptedException {
             job.getActions(SafeParametersAction.class).forEach(a -> envs.putAll(asParamValues(a)));
         }
 
         @Override
-        public void buildEnvironmentFor(@SuppressWarnings("rawtypes") @Nonnull Run run,
-                                        @Nonnull EnvVars envs,
-                                        @Nonnull TaskListener listener) throws IOException, InterruptedException {
+        public void buildEnvironmentFor(@SuppressWarnings("rawtypes") @NonNull Run run,
+                                        @NonNull EnvVars envs,
+                                        @NonNull TaskListener listener) throws IOException, InterruptedException {
             SafeParametersAction action = run.getAction(SafeParametersAction.class);
             if (action != null) {
                 envs.putAll(asParamValues(action));
             }
         }
 
-        private Map<String, String> asParamValues(@Nonnull SafeParametersAction action) {
+        private Map<String, String> asParamValues(@NonNull SafeParametersAction action) {
             Map<String, String> paramValues = new HashMap<>();
 
             for (ParameterValue p : action.getParameters()) {

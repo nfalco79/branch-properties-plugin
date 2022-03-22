@@ -21,15 +21,15 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.servlet.ServletException;
 
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
+import edu.umd.cs.findbugs.annotations.CheckForNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import hudson.Util;
 import hudson.model.Action;
 import hudson.model.Cause;
@@ -58,7 +58,7 @@ public class ParameterAction implements Action {
     protected final Job<?, ?> job;
 
     public ParameterAction(Job<?, ?> job,
-                           @Nonnull String actionLabel,
+                           @NonNull String actionLabel,
                            @CheckForNull String badgeTemplate,
                            @CheckForNull List<ParameterDefinition> parameterDefinitions) {
         this.actionLabel = actionLabel;
