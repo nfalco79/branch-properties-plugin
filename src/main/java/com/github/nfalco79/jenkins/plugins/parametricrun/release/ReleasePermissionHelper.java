@@ -1,5 +1,6 @@
 /*
- * Copyright 2018 Falco Nikolas
+ * Copyright 2018 Nikolas Falco
+ *
  * Licensed under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
@@ -16,9 +17,7 @@
 package com.github.nfalco79.jenkins.plugins.parametricrun.release;
 
 import com.github.nfalco79.jenkins.plugins.parametricrun.ParameterActionPermissionHelper;
-
 import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.init.InitMilestone;
 import hudson.init.Initializer;
 import hudson.model.Job;
@@ -44,7 +43,6 @@ public final class ReleasePermissionHelper {
     /**
      * Earlier initialisation of permission before job configuration are read so the permission can be found in the parent group
      */
-    @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT", justification = "Needs to trigger initialisation")
     @Initializer(before = InitMilestone.JOB_LOADED)
     public static void init() {
         RELEASE_PERMISSION.getId();

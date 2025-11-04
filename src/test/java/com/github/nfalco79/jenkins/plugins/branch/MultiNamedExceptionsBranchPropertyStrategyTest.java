@@ -1,5 +1,6 @@
 /*
- * Copyright 2018 Falco Nikolas
+ * Copyright 2018 Nikolas Falco
+ *
  * Licensed under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
@@ -16,26 +17,21 @@
 package com.github.nfalco79.jenkins.plugins.branch;
 
 
-import static com.github.nfalco79.jenkins.plugins.branch.MultiNamedExceptionsBranchPropertyStrategy.Named.isMatch;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-import java.util.List;
-
-import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.mockito.Mockito;
-
 import com.github.nfalco79.jenkins.plugins.branch.MultiNamedExceptionsBranchPropertyStrategy.Named;
-
+import java.util.List;
 import jenkins.branch.BranchProperty;
 import jenkins.branch.BranchPropertyStrategy;
 import jenkins.scm.api.SCMHead;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
-public class MultiNamedExceptionsBranchPropertyStrategyTest {
+import static com.github.nfalco79.jenkins.plugins.branch.MultiNamedExceptionsBranchPropertyStrategy.Named.isMatch;
+import static org.assertj.core.api.Assertions.assertThat;
+
+class MultiNamedExceptionsBranchPropertyStrategyTest {
 
     @Test
-    public void test_that_strategy_aggregates_properties_from_matching_branches() throws Exception {
+    void test_that_strategy_aggregates_properties_from_matching_branches() throws Exception {
         BranchProperty defaultProp = Mockito.mock(BranchProperty.class);
 
         BranchProperty prop1 = Mockito.mock(BranchProperty.class);
@@ -51,54 +47,54 @@ public class MultiNamedExceptionsBranchPropertyStrategyTest {
             });
 
         List<BranchProperty> matches = strategy.getPropertiesFor(new SCMHead("master"));
-        assertThat(matches, Matchers.containsInAnyOrder(prop1, prop2));
+        assertThat(matches).containsExactlyInAnyOrder(prop1, prop2);
     }
 
     @Test
-    public void examplesFromHelpText() throws Exception {
+    void examplesFromHelpText() throws Exception {
         // "production"  matches one and only one branch
-        assertThat(isMatch("production", "production"), is(true));
-        assertThat(isMatch("Production", "production"), is(true));
-        assertThat(isMatch("PRODUCTION", "production"), is(true));
-        assertThat(isMatch("proDuctIon", "production"), is(true));
-        assertThat(isMatch("staging", "production"), is(false));
+        assertThat(isMatch("production", "production")).isTrue();
+        assertThat(isMatch("Production", "production")).isTrue();
+        assertThat(isMatch("PRODUCTION", "production")).isTrue();
+        assertThat(isMatch("proDuctIon", "production")).isTrue();
+        assertThat(isMatch("staging", "production")).isFalse();
         // "sandbox/*" matches sandbox/acme but not sandbox/coyote/wiley
-        assertThat(isMatch("trunk", "sandbox/*"), is(false));
-        assertThat(isMatch("sandbox/acme", "sandbox/*"), is(true));
-        assertThat(isMatch("sandbox/coyote/wiley", "sandbox/*"), is(false));
+        assertThat(isMatch("trunk", "sandbox/*")).isFalse();
+        assertThat(isMatch("sandbox/acme", "sandbox/*")).isTrue();
+        assertThat(isMatch("sandbox/coyote/wiley", "sandbox/*")).isFalse();
         // "sandbox/**" matches sandbox/acme and sandbox/coyote/wiley
-        assertThat(isMatch("trunk", "sandbox/**"), is(false));
-        assertThat(isMatch("sandbox/acme", "sandbox/**"), is(true));
-        assertThat(isMatch("sandbox/coyote/wiley", "sandbox/**"), is(true));
+        assertThat(isMatch("trunk", "sandbox/**")).isFalse();
+        assertThat(isMatch("sandbox/acme", "sandbox/**")).isTrue();
+        assertThat(isMatch("sandbox/coyote/wiley", "sandbox/**")).isTrue();
         // "production,staging" matches two specific branches
-        assertThat(isMatch("production", "production,staging"), is(true));
-        assertThat(isMatch("staging", "production,staging"), is(true));
-        assertThat(isMatch("test", "production,staging"), is(false));
+        assertThat(isMatch("production", "production,staging")).isTrue();
+        assertThat(isMatch("staging", "production,staging")).isTrue();
+        assertThat(isMatch("test", "production,staging")).isFalse();
         // "production,staging*" matches the production branch and any branch starting with staging
-        assertThat(isMatch("production", "production,staging*"), is(true));
-        assertThat(isMatch("staging", "production,staging*"), is(true));
-        assertThat(isMatch("staging2", "production,staging*"), is(true));
-        assertThat(isMatch("test", "production,staging*"), is(false));
+        assertThat(isMatch("production", "production,staging*")).isTrue();
+        assertThat(isMatch("staging", "production,staging*")).isTrue();
+        assertThat(isMatch("staging2", "production,staging*")).isTrue();
+        assertThat(isMatch("test", "production,staging*")).isFalse();
         // "!staging/**,staging/test/**" matches any branch that is not the a staging branch, but will match the staging/test branches
-        assertThat(isMatch("production", "!staging/**,staging/test/**"), is(true));
-        assertThat("lack of trailing / matches /**", isMatch("staging", "!staging/**,staging/test/**"), is(false));
-        assertThat(isMatch("staging/", "!staging/**,staging/test/**"), is(false));
-        assertThat(isMatch("staging/acme", "!staging/**,staging/test/**"), is(false));
-        assertThat(isMatch("staging/acme/foo", "!staging/**,staging/test/**"), is(false));
-        assertThat("lack of trailing / matches /**", isMatch("staging/test", "!staging/**,staging/test/**"), is(true));
-        assertThat(isMatch("staging/test/foo", "!staging/**,staging/test/**"), is(true));
+        assertThat(isMatch("production", "!staging/**,staging/test/**")).isTrue();
+        assertThat(isMatch("staging", "!staging/**,staging/test/**")).describedAs("lack of trailing / matches /**").isFalse();
+        assertThat(isMatch("staging/", "!staging/**,staging/test/**")).isFalse();
+        assertThat(isMatch("staging/acme", "!staging/**,staging/test/**")).isFalse();
+        assertThat(isMatch("staging/acme/foo", "!staging/**,staging/test/**")).isFalse();
+        assertThat(isMatch("staging/test", "!staging/**,staging/test/**")).describedAs("lack of trailing / matches /**").isTrue();
+        assertThat(isMatch("staging/test/foo", "!staging/**,staging/test/**")).isTrue();
         // simple escape
-        assertThat(isMatch("\\!starts-with-invert", "\\!starts-with-invert"), is(false));
-        assertThat(isMatch("!starts-with-invert", "\\!starts-with-invert"), is(true));
+        assertThat(isMatch("\\!starts-with-invert", "\\!starts-with-invert")).isFalse();
+        assertThat(isMatch("!starts-with-invert", "\\!starts-with-invert")).isTrue();
         // escape escape
-        assertThat(isMatch("\\!starts-with-escape", "\\\\!starts-with-escape"), is(true));
-        assertThat(isMatch("\\\\!starts-with-escape", "\\\\!starts-with-escape"), is(false));
+        assertThat(isMatch("\\!starts-with-escape", "\\\\!starts-with-escape")).isTrue();
+        assertThat(isMatch("\\\\!starts-with-escape", "\\\\!starts-with-escape")).isFalse();
         // no internal escapes needed
-        assertThat(isMatch("no-internal-!-escape", "no-internal-!-escape"), is(true));
-        assertThat(isMatch("no-internal-!-escape", "no-internal-\\!-escape"), is(false));
-        assertThat(isMatch("no-internal-\\!-escape", "no-internal-\\!-escape"), is(true));
-        assertThat(isMatch("no-internal-\\-escape", "no-internal-\\-escape"), is(true));
-        assertThat(isMatch("no-internal-\\-escape", "no-internal-\\\\-escape"), is(false));
-        assertThat(isMatch("no-internal-\\\\-escape", "no-internal-\\\\-escape"), is(true));
+        assertThat(isMatch("no-internal-!-escape", "no-internal-!-escape")).isTrue();
+        assertThat(isMatch("no-internal-!-escape", "no-internal-\\!-escape")).isFalse();
+        assertThat(isMatch("no-internal-\\!-escape", "no-internal-\\!-escape")).isTrue();
+        assertThat(isMatch("no-internal-\\-escape", "no-internal-\\-escape")).isTrue();
+        assertThat(isMatch("no-internal-\\-escape", "no-internal-\\\\-escape")).isFalse();
+        assertThat(isMatch("no-internal-\\\\-escape", "no-internal-\\\\-escape")).isTrue();
     }
 }

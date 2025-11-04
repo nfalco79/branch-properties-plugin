@@ -1,5 +1,6 @@
 /*
- * Copyright 2018 Falco Nikolas
+ * Copyright 2018 Nikolas Falco
+ *
  * Licensed under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
@@ -42,7 +43,7 @@ public final class ParameterActionPermissionHelper {
 
     /**
      * Earlier initialisation of permission before job configuration are read so the permission can be found in the parent group
-     * @return 
+     * @return
      */
     @Initializer(before = InitMilestone.JOB_LOADED)
     public static String init() {

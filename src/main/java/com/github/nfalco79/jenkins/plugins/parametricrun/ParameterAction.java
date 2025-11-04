@@ -1,5 +1,6 @@
 /*
- * Copyright 2018 Falco Nikolas
+ * Copyright 2018 Nikolas Falco
+ *
  * Licensed under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
@@ -174,15 +175,17 @@ public class ParameterAction implements Action {
          * This check is made ONLY if someone will call this method even if
          * isParametrized() is false.
          */
-        if (paramDefProp == null)
+        if (paramDefProp == null) {
             return defValues;
+        }
 
         /* Scan for all parameter with an associated default values */
         for (ParameterDefinition paramDefinition : paramDefProp.getParameterDefinitions()) {
             ParameterValue defaultValue = paramDefinition.getDefaultParameterValue();
 
-            if (defaultValue != null)
+            if (defaultValue != null) {
                 defValues.add(defaultValue);
+            }
         }
 
         return defValues;
