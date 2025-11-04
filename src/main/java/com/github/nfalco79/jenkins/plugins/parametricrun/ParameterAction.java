@@ -22,10 +22,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.servlet.ServletException;
-
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.StaplerRequest2;
+import org.kohsuke.stapler.StaplerResponse2;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import edu.umd.cs.findbugs.annotations.CheckForNull;
@@ -42,6 +40,7 @@ import hudson.model.ParameterValue;
 import hudson.model.ParametersAction;
 import hudson.model.ParametersDefinitionProperty;
 import hudson.model.Run;
+import jakarta.servlet.ServletException;
 import jenkins.model.ParameterizedJobMixIn;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -118,7 +117,7 @@ public class ParameterAction implements Action {
      * @throws ServletException
      */
     @RequirePOST
-    public void doSubmit(StaplerRequest request, StaplerResponse response) throws IOException, ServletException {
+    public void doSubmit(StaplerRequest2 request, StaplerResponse2 response) throws IOException, ServletException {
         verifyPermission();
 
         // bind development / release version
