@@ -17,9 +17,9 @@ under the License.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
     <j:if test="${it.badgeTip != null}">
-        <img width="16" height="16" tooltip="${it.badgeTip}" alt="${it.badgeTip}" src="${imagesURL}/16x16/package.png" />
+        <l:icon tooltip="${it.badgeTip}" alt="${it.badgeTip}" class="icon-package icon-sm"/>
     </j:if>
     <j:if test="${it.badgeTip == null}">
-        <img width="16" height="16" src="${imagesURL}/16x16/package.png" />
+        <l:icon class="icon-package icon-sm"/>
     </j:if>
 </j:jelly>
